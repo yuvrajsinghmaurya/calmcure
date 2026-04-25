@@ -1,15 +1,19 @@
-const express = require('express'); // import express
+const app = require('./src/app');
+const { PORT } = require('./src/config/env');
+const { testConnection } = require('./src/config/db');
 
-const app = express(); // create app instance
+async function startServer() {
+    try {
+        await testConnection();
+        console.log('Database connected');
+    } catch (error) {
+        console.error('Database connection failed');
+        console.error(error.message);
+    }
 
-const PORT = 8000; // define port
+    app.listen(PORT, () => {
+        console.log(`Server started at http://localhost:${PORT}`);
+    });
+}
 
-// create route
-app.get('/', (req, res) => {
-    res.send('Server is running 🚀');
-});
-
-// start server
-app.listen(PORT, () => {
-    console.log(`Serverd started at http://localhost:${PORT}`);
-});
+startServer();
