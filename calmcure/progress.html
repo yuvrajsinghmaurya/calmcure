@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress Tracker</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- 🔐 PROTECTION -->
+    <script>
+        if (localStorage.getItem("isLoggedIn") !== "true") {
+            window.location.href = "login.html";
+        }
+    </script>
+</head>
+
+<body>
+
+<!-- 🌿 HEADER -->
+<header style="text-align:center; padding:20px;">
+    <h1>📊 Your Progress Tracker</h1>
+    <h3 id="usernameDisplay"></h3>
+</header>
+
+<!-- 📈 GRAPH SECTION -->
+<section style="width:90%; max-width:800px; margin:auto;">
+
+    <div style="background:white; padding:20px; border-radius:12px;">
+        <h2>📈 Mood Analytics (Last 30 Days)</h2>
+        <canvas id="moodChart"></canvas>
+    </div>
+
+</section>
+
+<!-- 📌 INSIGHTS -->
+<section style="width:90%; max-width:800px; margin:20px auto;">
+
+    <div style="background:#f5f5f5; padding:15px; border-radius:12px;">
+        <h3>🧠 Insights</h3>
+        <p id="insights">Loading...</p>
+    </div>
+
+</section>
+
+<!-- 🚪 ACTIONS -->
+<section style="text-align:center; margin:30px;">
+
+    <button onclick="window.location.href='mood.html'">
+        ➕ Add Mood
+    </button>
+
+    <button onclick="logout()" style="background:red;color:white;">
+        Logout
+    </button>
+
+</section>
+
+<!-- JS -->
+<script src="js/app.js"></script>
+
+<script>
+window.onload = function() {
+    loadUser();
+    showMoodGraph();
+    showInsights();
+};
+</script>
+
+</body>
+</html> 

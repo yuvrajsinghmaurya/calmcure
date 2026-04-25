@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Journaling</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="journal-page">
+<div class="container">
+
+  <!-- SETUP SCREEN -->
+  <div id="setupScreen" class="journal-card-ui">
+    <h2>Create Your Journal Account 🔐</h2>
+    <input type="text" id="newId" placeholder="Create ID">
+    <input type="password" id="newPass" placeholder="Create Password">
+    <input type="password" id="confirmPass" placeholder="Confirm Password">
+    <button onclick="createAccount()">Create Account</button>
+    <p id="setupMsg"></p>
+  </div>
+
+  <!-- LOGIN SCREEN -->
+  <div id="loginScreen" class="journal-card-ui">
+    <h2>Login to Journal 🔑</h2>
+    <input type="text" id="loginId" placeholder="Enter ID">
+    <input type="password" id="loginPass" placeholder="Enter Password">
+    <button onclick="login()">Login</button>
+    <p id="loginMsg"></p>
+  </div>
+
+
+<!-- 🎤 VOICE INPUT -->
+<button onclick="startVoice()">🎤 Speak</button>
+
+<!-- 😊 MOOD TAG -->
+<div class="mood-tag">
+    <label>Tag your mood:</label>
+    <select id="journalMood">
+        <option value="">Select Mood</option>
+        <option>😊 Happy</option>
+        <option>😐 Neutral</option>
+        <option>😔 Sad</option>
+        <option>😡 Angry</option>
+        <option>😌 Calm</option>
+    </select>
+</div>
+
+<!-- 📅 FILTER BY DATE -->
+<input type="date" id="filterDate" onchange="filterByDate()">
+
+<!-- 🧠 AI REFLECTION -->
+<div id="aiReflection" class="ai-box"></div>
+
+<h2>📖 Your Safe Space</h2>
+<p>Write your thoughts freely. This space is just for you.</p>
+
+<!-- JOURNAL INPUT -->
+<textarea id="journalInput" placeholder="Start writing your thoughts..."></textarea>
+
+<br>
+<button onclick="saveJournal()">Save Entry</button>
+
+<hr>
+
+<!-- JOURNAL HISTORY -->
+<h3>📝 Your Entries</h3>
+<div id="journalHistory"></div>
+
+<script src="js/app.js"></script>
+
+</body>
+</html>

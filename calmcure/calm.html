@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calm Mode</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="calm-page">
+
+<!-- 🎬 BACKGROUND VIDEO -->
+<video autoplay muted loop id="calmVideo">
+    <source src="assets/vdo/beach_vdo1.mp4" type="video/mp4">
+</video>
+
+<!-- 🌿 OVERLAY -->
+<div class="calm-overlay">
+
+    <!-- BREATHING CIRCLE -->
+    <div class="breathing-container">
+        <div class="breathing-circle"></div>
+        <p id="breathText">Breathe In</p>
+    </div>
+
+    <!-- AFFIRMATION -->
+    <div class="affirmation" id="affirmationText">
+        You are safe. Take a deep breath.
+    </div>
+
+    <!-- TIMER -->
+    <div class="timer" id="timer">05:00</div>
+
+    <!-- CONTROLS -->
+    <div class="controls">
+        <button onclick="toggleSound()">🔊 Sound</button>
+        <button onclick="exitCalmMode()">❌ Exit</button>
+    </div>
+
+</div>
+
+<script src="js/app.js"></script>
+
+</body>
+</html>
