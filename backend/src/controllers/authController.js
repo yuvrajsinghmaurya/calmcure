@@ -9,6 +9,7 @@ const JWT_SECRET = process.env.JWT_SECRET || 'changeme_secret';
 async function register(req, res) {
     try {
         const { name, email, password } = req.body;
+        console.log('Register request:', { name, email });
         if (!name || !email || !password) {
             return res.status(400).json({ success: false, message: 'All fields are required.' });
         }
@@ -18,6 +19,7 @@ async function register(req, res) {
         }
         const password_hash = await bcrypt.hash(password, 10);
         const user = await createUser({ name, email, password_hash });
+        console.log('User created with id:', user && user.id);
         const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, { expiresIn: '7d' });
         res.status(201).json({ success: true, token, user: { id: user.id, name: user.name, email: user.email } });
     } catch (err) {
@@ -28,6 +30,7 @@ async function register(req, res) {
 async function login(req, res) {
     try {
         const { email, password } = req.body;
+        console.log('Login request for:', email);
         if (!email || !password) {
             return res.status(400).json({ success: false, message: 'Email and password required.' });
         }

@@ -29,8 +29,18 @@ function exitCalmMode() {
  * 🔊 SOUND CONTROL
  ***********************/
 function toggleSound() {
-    const video = document.getElementById("calmVideo");
-    if (video) video.muted = !video.muted;
+    const audio = document.getElementById("calmAudio");
+    const btn = document.querySelector(".controls button"); // Find the sound button
+    
+    if (audio) {
+        if (audio.paused) {
+            audio.play().catch(e => console.log("Audio playback failed:", e));
+            if (btn) btn.innerText = "🔇 Mute";
+        } else {
+            audio.pause();
+            if (btn) btn.innerText = "🔊 Sound";
+        }
+    }
 }
 
 
@@ -224,30 +234,17 @@ function showInsights() {
  * 📈 MOOD GRAPH (LAST 30 DAYS)
  ***********************/
 function showMoodGraph() {
-    let moods = JSON.parse(localStorage.getItem("moods")) || [];
+    const token = localStorage.getItem('token');
+    if (!token) return;
 
-    let moodCount = {
-        Happy: 0,
-        Neutral: 0,
-        Sad: 0,
-        Angry: 0,
-        Calm: 0
-    };
-
-    let today = new Date();
-        const token = localStorage.getItem('token');
-        if (!token) return;
-        let moods = [];
-        // fetch moods then render graph
-        fetch('http://localhost:8000/api/moods', { headers: { 'Authorization': 'Bearer ' + token } })
-            .then(r => r.json())
-            .then(data => {
-                if (!data.success) return;
-                moods = data.moods || [];
-                renderMoodGraph(moods);
-            }).catch(() => {});
-        return;
-    }
+    fetch('http://localhost:8000/api/moods', { headers: { 'Authorization': 'Bearer ' + token } })
+        .then(r => r.json())
+        .then(data => {
+            if (!data.success) return;
+            const moods = data.moods || [];
+            renderMoodGraph(moods);
+        }).catch(() => {});
+}
 
     function renderMoodGraph(moods) {
         let moodCount = {
@@ -309,8 +306,12 @@ function showMoodGraph() {
         return;
     }
 
+function saveJournal() {
+    const text = document.getElementById("journalInput")?.value || "";
+    const mood = document.getElementById("journalMood")?.value || "";
     const token = localStorage.getItem('token');
     if (!token) return window.location.href = 'login.html';
+    
     fetch('http://localhost:8000/api/journals', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
@@ -410,7 +411,7 @@ async function login(event) {
         const data = await res.json();
         if (data.success) {
             setLogin(data.user, data.token);
-            window.location.href = "dashboard.html";
+            window.location.href = "index.html";
         } else {
             alert(data.message || "Login failed");
         }
@@ -422,10 +423,10 @@ async function login(event) {
 // Real signup logic
 async function signup(event) {
     event.preventDefault();
-    const name = document.querySelector('#signupForm input[placeholder="Full Name"]')?.value;
-    const email = document.querySelector('#signupForm input[placeholder="Email"]')?.value;
-    const password = document.querySelector('#signupForm input[placeholder="Password"]')?.value;
-    const confirm = document.querySelector('#signupForm input[placeholder="Confirm Password"]')?.value;
+    const name = document.getElementById('name')?.value;
+    const email = document.getElementById('email')?.value;
+    const password = document.getElementById('password')?.value;
+    const confirm = document.getElementById('confirmPassword')?.value;
     if (!name || !email || !password || !confirm) {
         alert("All fields required");
         return;
@@ -443,7 +444,7 @@ async function signup(event) {
         const data = await res.json();
         if (data.success) {
             setLogin(data.user, data.token);
-            window.location.href = "dashboard.html";
+            window.location.href = "index.html";
         } else {
             alert(data.message || "Signup failed");
         }
@@ -453,10 +454,50 @@ async function signup(event) {
 }
 
 
+const PROTECTED_ROUTES = ["/dashboard.html", "/mood.html", "/journal.html", "/progress.html", "/calm.html", "/relax.html"];
+
 function checkAuth() {
     const token = localStorage.getItem("token");
-    if (!token) {
+    const currentPath = window.location.pathname;
+    const isProtected = PROTECTED_ROUTES.some(route => currentPath.endsWith(route));
+    
+    if (isProtected && !token) {
         window.location.href = "login.html";
+    }
+}
+
+function updateNavbar() {
+    const token = localStorage.getItem("token");
+    const user = localStorage.getItem("user");
+    
+    // Toggle Dashboard link on index.html
+    const navDashboard = document.getElementById("navDashboard");
+    if (navDashboard) {
+        navDashboard.style.display = token ? "inline" : "none";
+    }
+
+    // Update navbar links
+    const loginLinks = document.querySelectorAll('nav a[href="login.html"]');
+    loginLinks.forEach(link => {
+        if (token) {
+            link.innerText = "Logout";
+            link.href = "#";
+            link.onclick = (e) => {
+                e.preventDefault();
+                logout();
+            };
+        } else {
+            link.innerText = "Login";
+            link.href = "login.html";
+            link.onclick = null;
+        }
+    });
+
+    // Update CTA on index.html
+    const primaryBtn = document.querySelector('.primary-btn[href="login.html"]');
+    if (primaryBtn && token) {
+        primaryBtn.innerText = "Go to Dashboard";
+        primaryBtn.href = "dashboard.html";
     }
 }
 
@@ -481,7 +522,13 @@ function logout() {
  * 🚀 MASTER ONLOAD (FIXED)
  ***********************/
 window.onload = function () {
-    // Attach login/signup handlers if forms exist
+    // 1. Run Route Protection
+    checkAuth();
+
+    // 2. Update Navigation elements
+    updateNavbar();
+
+    // 3. Attach login/signup handlers if forms exist
     const loginForm = document.getElementById("loginForm");
     if (loginForm) {
         loginForm.addEventListener("submit", login);
@@ -490,11 +537,11 @@ window.onload = function () {
     if (signupForm) {
         signupForm.addEventListener("submit", signup);
     }
-    // mood
-    displayMood();
-    showInsights();
-    showMoodGraph();
-    // journal
-    displayJournal();
-    loadUser();
+    
+    // 4. Feature initialization based on page elements
+    if (document.getElementById("history")) displayMood();
+    if (document.getElementById("insights")) showInsights();
+    if (document.getElementById("moodChart")) showMoodGraph();
+    if (document.getElementById("journalHistory")) displayJournal();
+    if (document.getElementById("usernameDisplay")) loadUser();
 };

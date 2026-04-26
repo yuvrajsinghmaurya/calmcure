@@ -50,29 +50,6 @@
 <!-- app.js FIRST -->
 <script src="js/app.js"></script>
 
-<!-- then login logic -->
-<script>
-window.addEventListener("DOMContentLoaded", function () {
-
-    document.getElementById("loginForm").addEventListener("submit", function (e) {
-        e.preventDefault();
-
-        let email = document.getElementById("email").value;
-        let password = document.getElementById("password").value;
-
-        if (email && password) {
-
-            setLogin(email);   // now this will WORK
-
-            window.location.href = "progress.html";
-
-        } else {
-            alert("Please fill all fields");
-        }
-    });
-
-});
-</script>
 
 </body>
 </html>

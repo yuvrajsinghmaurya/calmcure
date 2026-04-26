@@ -2,42 +2,63 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Relaxation Hub</title>
-    <link rel="stylesheet" href= "css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relaxation Hub - CalmCure</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body>
+<body class="dashboard-page">
 
-<section class="relax-container">
+<!-- 🌿 BACKGROUND LEAVES -->
+<div class="bg-leaves">
+    <span></span><span></span><span></span><span></span><span></span>
+</div>
 
-    <h1>🌿 Relaxation Hub</h1>
-    <p>Take a break. Choose what helps you feel better.</p>
+<!-- NAVBAR -->
+<header class="navbar">
+    <a href="index.html" class="brand">CalmCure <span>🌿</span></a>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="mood.html">Mood</a>
+        <a href="journal.html">Journal</a>
+        <a href="progress.html">Progress</a>
+        <a href="login.html">Login</a>
+    </nav>
+</header>
+
+<section class="relax-container" style="margin-top: 100px; max-width: 800px; margin-left: auto; margin-right: auto; background: rgba(255,255,255,0.9); padding: 30px; border-radius: 12px;">
+
+    <h1 style="text-align: center;">🌿 Relaxation Hub</h1>
+    <p style="text-align: center; color: #555;">Take a break. Choose what helps you feel better.</p>
 
     <!-- 🎧 MUSIC -->
-    <div class="relax-card">
+    <div class="relax-card" style="margin-top: 20px; padding: 20px; background: #fff; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
         <h2>🎧 Relaxing Music</h2>
         <p>Listen to calming playlists to reduce stress.</p>
 
-        <iframe style="border-radius:12px"
+        <iframe style="border-radius:12px; margin-top: 10px;"
         src="https://open.spotify.com/embed/playlist/37i9dQZF1DX4sWSpwq3LiO"
         width="100%" height="80" frameBorder="0" allowfullscreen></iframe>
     </div>
 
     <!-- 📖 NOVELS -->
-    <div class="relax-card">
+    <div class="relax-card" style="margin-top: 20px; padding: 20px; background: #fff; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
         <h2>📖 Light Reading</h2>
         <p>Read something soothing and positive.</p>
 
-        <a href="https://www.gutenberg.org/" target="_blank">📚 Read Free Books</a><br>
-        <a href="https://www.wattpad.com/" target="_blank">✨ Wattpad Stories</a>
+        <ul style="margin-top: 10px; line-height: 1.8;">
+            <li><a href="https://www.gutenberg.org/" target="_blank">📚 Read Free Books</a></li>
+            <li><a href="https://www.wattpad.com/" target="_blank">✨ Wattpad Stories</a></li>
+        </ul>
     </div>
 
     <!-- 🧘 EXERCISE -->
-    <div class="relax-card">
+    <div class="relax-card" style="margin-top: 20px; padding: 20px; background: #fff; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
         <h2>🧘 Relaxing Exercises</h2>
         <p>Simple movements to relax your body.</p>
 
-        <ul>
+        <ul style="margin-top: 10px; line-height: 1.8;">
             <li>🫁 Deep Breathing (5 mins)</li>
             <li>🧎 Stretching</li>
             <li>🧘 Yoga Pose (Child’s Pose)</li>
@@ -45,22 +66,24 @@
     </div>
 
     <!-- 🌅 NATURE -->
-    <div class="relax-card">
+    <div class="relax-card" style="margin-top: 20px; padding: 20px; background: #fff; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
         <h2>🌅 Take a Break</h2>
         <p>Disconnect and refresh your mind.</p>
 
-        <ul>
+        <ul style="margin-top: 10px; line-height: 1.8;">
             <li>🌳 Go for a short walk</li>
             <li>☀️ Sit in sunlight</li>
             <li>📵 Avoid screen for 10 mins</li>
         </ul>
     </div>
 
-    <button onclick="goBack()">⬅ Back</button>
+    <div style="text-align: center; margin-top: 30px;">
+        <button onclick="window.location.href='dashboard.html'" style="padding: 10px 20px; font-size: 16px;">⬅ Back to Dashboard</button>
+    </div>
 
 </section>
 
-<script src="app.js"></script>
+<script src="js/app.js"></script>
 
 </body>
 </html>
