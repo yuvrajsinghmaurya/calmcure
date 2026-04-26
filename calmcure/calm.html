@@ -3,16 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calm Mode</title>
+    <title>Calm Mode - CalmCure</title>
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Keep navbar fixed but ensure it's above the overlay */
+        .navbar { z-index: 1000 !important; }
+        .calm-overlay { z-index: 900; padding-top: 80px; }
+    </style>
 </head>
 
 <body class="calm-page">
 
-<!-- 🎬 BACKGROUND VIDEO -->
+<!-- NAVBAR -->
+<header class="navbar">
+    <a href="index.html" class="brand">CalmCure <span>🌿</span></a>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="mood.html">Mood</a>
+        <a href="journal.html">Journal</a>
+        <a href="progress.html">Progress</a>
+        <a href="login.html">Login</a>
+    </nav>
+</header>
+
+<!-- 🎬 BACKGROUND VIDEO & AUDIO -->
 <video autoplay muted loop id="calmVideo">
     <source src="assets/vdo/beach_vdo1.mp4" type="video/mp4">
 </video>
+<audio id="calmAudio" loop>
+    <!-- Public domain beach waves sound -->
+    <source src="https://actions.google.com/sounds/v1/water/waves_crashing_on_rock_beach.ogg" type="audio/ogg">
+</audio>
 
 <!-- 🌿 OVERLAY -->
 <div class="calm-overlay">
